@@ -1,6 +1,7 @@
 package com.fkulic.bugsy;
 
-import org.simpleframework.xml.Attribute;
+import com.fkulic.bugsy.rsshelper.Enclosure;
+
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
 
@@ -25,7 +26,7 @@ public class Article {
     }
 
     public String getImgUrl() {
-        return Enclosure.imgUrl;
+        return mEnclosure.getImgUrl();
     }
 
     public String getDescription() {
@@ -34,12 +35,5 @@ public class Article {
 
     public String getCategory() {
         return mCategory;
-    }
-
-    @Root(strict = false)
-    static class Enclosure{
-        @Attribute(name = "url")
-        private static String imgUrl;
-
     }
 }
