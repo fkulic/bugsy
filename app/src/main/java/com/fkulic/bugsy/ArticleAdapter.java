@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,9 +18,15 @@ import java.util.List;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     List<Article> mArticles;
+    static OpenArticleInBrowser mOpenArticleInBrowser;
 
-    public ArticleAdapter(List<Article> articles) {
-        mArticles = articles;
+    public ArticleAdapter(OpenArticleInBrowser openArticleInBrowser) {
+        this.mArticles = new ArrayList<>();
+        mOpenArticleInBrowser = openArticleInBrowser;
+    }
+
+    public interface OpenArticleInBrowser{
+        void openArticleInBrowser(int position);
     }
 
     @Override
@@ -38,6 +45,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                 .load(article.getImgUrl())
                 .error(R.drawable.placeholder)
                 .placeholder(R.drawable.placeholder)
+                .fit()
                 .into(holder.ivArticleImg);
         holder.tvArticleDescription.setText(article.getDescription().trim());
         holder.tvArticleCategory.setText(article.getCategory());
@@ -60,13 +68,20 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         private TextView tvArticleCategory;
         private TextView tvOpenArticleInBrowser;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             this.tvArticleTitle = (TextView) itemView.findViewById(R.id.tvArticleTitle);
             this.ivArticleImg = (ImageView) itemView.findViewById(R.id.ivArticleImg);
             this.tvArticleDescription = (TextView) itemView.findViewById(R.id.tvArticleDescription);
             this.tvArticleCategory = (TextView) itemView.findViewById(R.id.tvArticleCategory);
             this.tvOpenArticleInBrowser = (TextView) itemView.findViewById(R.id.tvOpenArticleInBrowser);
+
+            this.tvOpenArticleInBrowser.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOpenArticleInBrowser.openArticleInBrowser(getLayoutPosition());
+                }
+            });
         }
 
     }
