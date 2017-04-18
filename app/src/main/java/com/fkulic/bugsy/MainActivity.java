@@ -3,6 +3,7 @@ package com.fkulic.bugsy;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +14,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements GetRSSData.OnDataAvailable, ArticleAdapter.OpenArticleInBrowser {
 
-    RecyclerView rvArticles;
-    RecyclerView.LayoutManager mManager;
-
-    ArticleAdapter mArticleAdapter;
+    private SwipeRefreshLayout swipeRefreshArticles;
+    private RecyclerView rvArticles;
+    private RecyclerView.LayoutManager mManager;
+    private ArticleAdapter mArticleAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +33,30 @@ public class MainActivity extends AppCompatActivity implements GetRSSData.OnData
         this.rvArticles.setLayoutManager(this.mManager);
         this.rvArticles.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         this.rvArticles.setAdapter(this.mArticleAdapter);
+        this.swipeRefreshArticles = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshArticles);
+        swipeRefreshArticles.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getData();
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        GetRSSData rssData = new GetRSSData(this);
-        rssData.getArticleData();
+        getData();
     }
 
     @Override
     public void onDataAvailable(List<Article> articles) {
         this.mArticleAdapter.loadArticles(articles);
+        this.swipeRefreshArticles.setRefreshing(false);
     }
 
     @Override
     public void onDataNotAvailable() {
+        this.swipeRefreshArticles.setRefreshing(false);
         Toast.makeText(this, "Couldn't get data.", Toast.LENGTH_SHORT).show();
     }
 
@@ -62,5 +71,11 @@ public class MainActivity extends AppCompatActivity implements GetRSSData.OnData
         } else {
             Toast.makeText(this, "There is no browser installed on your device.", Toast.LENGTH_SHORT).show();
         } 
+    }
+
+    private void getData() {
+        mArticleAdapter.clear();
+        GetRSSData rssData = new GetRSSData(this);
+        rssData.getArticleData();
     }
 }

@@ -61,6 +61,11 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
         notifyDataSetChanged();
     }
 
+    public void clear() {
+        this.mArticles.clear();
+        notifyDataSetChanged();
+    }
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvArticleTitle;
         private ImageView ivArticleImg;
