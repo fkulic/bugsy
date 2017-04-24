@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#ff9800</color>
-    <color name="colorPrimaryDark">#f57c00</color>
-    <color name="colorAccent">#00e676</color>
-    <color name="mainBackground">#ffcc80</color>
-    <color name="articleBackground">#ffecb3</color>
+    <color name="colorPrimary">#ffca28</color>
+    <color name="colorPrimaryDark">#c79a00</color>
+    <color name="colorPrimaryLight">#fffd61</color>
+    <color name="colorAccent">@color/colorSecondary</color>
+    <color name="colorSecondary">#dd2c00</color>
+    <color name="colorSecondaryDark">#a30000</color>
+    <color name="colorSecondaryLight">#ff6434</color>
+    <color name="primaryText">#212121</color>
+    <color name="secondaryText">#ffffff</color>
+    <color name="icons">#212121</color>
+    <color name="divider">#BDBDBD</color>
+    <color name="mainBackground">#fff8e1</color>
+    <color name="rvBackground">#ffecb3</color>
     <color name="articleTitle">#424242</color>
     <color name="openInBrowserText">#addd2c00</color>
     <color name="articleCategory">#af6b3e</color>
-
-
 </resources>

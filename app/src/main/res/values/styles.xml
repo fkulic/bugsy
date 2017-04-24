@@ -1,10 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/primaryText</item>
+        <item name="android:textColorSecondary">@color/secondaryText</item>
+        <item name="android:icon">@color/icons</item>
+        <item name="android:windowBackground">@color/mainBackground</item>
+        <item name="actionBarStyle">@style/AppThemeActionBar</item>
+    </style>
+
+    <style name="AppThemeActionBar" parent="Base.Widget.AppCompat.ActionBar">
+        <item name="elevation">0dp</item>
+        <item name="background">@color/colorPrimary</item>
     </style>
 
 </resources>
