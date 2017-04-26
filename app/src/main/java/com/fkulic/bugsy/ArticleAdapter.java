@@ -12,17 +12,32 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fkulic.bugsy.MainActivity.CATEGORY_ALL;
+
 /**
  * Created by Filip on 14.4.2017..
  */
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
     List<Article> mArticles;
+    List<Article> allArticles;
+    private String selectedCategory;
+
+    public String getSelectedCategory() {
+        return selectedCategory;
+    }
+
+    public void setSelectedCategory(String selectedCategory) {
+        this.selectedCategory = selectedCategory;
+    }
+
     static OpenArticleInBrowser mOpenArticleInBrowser;
 
     public ArticleAdapter(OpenArticleInBrowser openArticleInBrowser) {
+        this.allArticles = new ArrayList<>();
         this.mArticles = new ArrayList<>();
         mOpenArticleInBrowser = openArticleInBrowser;
+        this.selectedCategory = CATEGORY_ALL;
     }
 
     public interface OpenArticleInBrowser{
@@ -57,12 +72,27 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
     }
 
     public void loadArticles(List<Article> articles) {
-        this.mArticles = articles;
+        this.allArticles = articles;
+        filterList();
+        notifyDataSetChanged();
+    }
+
+    public void filterList() {
+        if (selectedCategory.equals(CATEGORY_ALL)) {
+            this.mArticles = this.allArticles;
+        } else {
+            this.mArticles = new ArrayList<>();
+            for (Article article : this.allArticles) {
+                if (article.getCategory().equals(selectedCategory)) {
+                    this.mArticles.add(article);
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
     public void clear() {
-        this.mArticles.clear();
+        this.allArticles.clear();
         notifyDataSetChanged();
     }
 
